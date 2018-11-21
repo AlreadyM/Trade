@@ -1,0 +1,15 @@
+{
+  "name": "trade",
+  "version": "1.0.0",
+  "description": "carry exchanges",
+  "main": "index.js",
+  "dependencies": {
+    "ccxt": "^1.17.510"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ch",
+  "license": "ISC"
+}
