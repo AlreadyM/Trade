@@ -1,12 +1,12 @@
 // Do Not Change Anything
  module.exports = [
- "allcoin",
+ // "allcoin", //long time
  "bcex",
- "bibox",
+ "bibox", //long time
  "bitbank",
- "bitfinex",
+ "bitfinex", //long time
  "bitforex",
- "bitmex",
+ "bitmex", //long time
  "bitstamp",
  "bitstamp1",
  "bittrex",
@@ -14,15 +14,15 @@
  "coinbase",
  "coinbaseprime",
  "coinbasepro",
- "coinegg",
- "cointiger",
- "exmo",
- "gateio",
- "hitbtc",
- "hitbtc2",
- "huobipro",
- "kraken",
- "lbank",
+ "coinegg", //long time
+ "cointiger", //need api key
+ "exmo", //long time
+ "gateio", //ok then not ok
+ "hitbtc", //long time
+ "hitbtc2", //long time
+ "huobipro", //long time
+ "kraken", //
+ "lbank", //
  "liquid",
  "poloniex",
  "rightbtc",

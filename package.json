@@ -4,7 +4,8 @@
   "description": "carry exchanges",
   "main": "index.js",
   "dependencies": {
-    "ccxt": "^1.17.510"
+    "ccxt": "^1.17.510",
+    "colors": "^1.3.2"
   },
   "devDependencies": {},
   "scripts": {
