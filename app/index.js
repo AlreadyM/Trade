@@ -1,20 +1,20 @@
 'use strict';
-const color = require('colors');
-const ccxt = require('ccxt');
-const crypto = '';
+const color 	= require('colors');
+const ccxt 		= require('ccxt');
+const crypto 	= '';
 const goalExchanges = require('./Const_EXCHANGES');
 
 (() =>{
     console.log(goalExchanges.length);
-    let exchanges = {};
-
+    let exchanges = {}
+;
     var loop = {},
     	currentLoop = 0;
     loop = setInterval(function () {
-    	if(currentLoop > 5){ clearInterval(loop)};
+    	if(currentLoop > 50000){ clearInterval(loop)};
     	currentLoop +=1;
         _InitLoadMarkets(exchanges);
-    },2000);
+    },1000);
 
     function _InitALLExChanges(exs,TargetEx) {
         for (var i = 0; i < TargetEx.length; i++) {
