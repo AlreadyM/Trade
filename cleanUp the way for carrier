@@ -20,10 +20,18 @@ log 文件
 记录当天日期 
 		当前时间戳
 
+		folder 2018-11-25
+			// folder demand
+				file 2018-11-25_demand__001.log (提交时间，极值，双方深度，目的地，交易条件，是否发起交易   EOO{end of order})
+			// folder order
+				file 2018-11-25_order__001.log  (提交时间，货物名称，提交目的地，提交数量，提交金额，   EOO{end of order})
+			// folder hidtory
+				file 2018-11-25_banlance__001.log(提交时间，市场名称，账号名称，货物A数量，货物B数量   EOO{end of order})
+		
 		folder 2018-11-26
 			// folder demand
-				file 2018-11-26_demand__001.log (提交时间，极值，双方深度，目的地，交易条件，是否发起交易)
+				file 2018-11-26_demand__001.log (提交时间，极值，双方深度，目的地，交易条件，是否发起交易   EOO{end of order})
 			// folder order
-				file 2018-11-26_order__001.log  (提交时间，提交数量，提交金额，提交目的地，)
+				file 2018-11-26_order__001.log  (提交时间，货物名称，提交目的地，提交数量，提交金额，   EOO{end of order})
 			// folder hidtory
-				file 2018-11-26_banlance__001.log(提交时间，市场名称，账号名称，货物A数量，货物B数量)
+				file 2018-11-26_banlance__001.log(提交时间，市场名称，账号名称，货物A数量，货物B数量   EOO{end of order})
