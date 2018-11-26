@@ -1,10 +1,11 @@
 'use strict';
 const child_process = require('child_process');
-var tagg= require('threads_a_gogo');
+// var tagg= require('threads_a_gogo');
+const basePath  = require('./../base_config/path.js').basePath;
 const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
-const goalExchanges = require('./Const_EXCHANGES');
+const goalExchanges = require(basePath+'base_config/Const_EXCHANGES');
 
 (() =>{
     console.log(goalExchanges.length);
@@ -40,7 +41,7 @@ const goalExchanges = require('./Const_EXCHANGES');
         // for (var i = 0; i < exs.length; i++) {
             // let currentEx = exs[ex];
             // console.log(currentEx)
-            load_Markets_process[currentEx] = child_process.spawn('node', ['./app/_load_Markets_BY_child_process.js', currentEx])
+            load_Markets_process[currentEx] = child_process.spawn('node', [basePath +'exchange_part/_load_Markets_BY_child_process.js', currentEx])
             load_Markets_process[currentEx].stdout.on('data', function (data) {
                   console.log('stdout: ' + data);
                });
