@@ -1,5 +1,6 @@
 'use strict';
 const child_process = require('child_process');
+var tagg= require('threads_a_gogo');
 const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
