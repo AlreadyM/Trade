@@ -6,8 +6,11 @@ const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
 const goalExchanges = require(basePath+'base_config/Const_EXCHANGES');
-// const cpuNum    = require('os').cpus().length;
-const cpuNum    = goalExchanges.length;
+const cpuNum    = require('os').cpus().length;
+// const cpuNum    = goalExchanges.length;
+
+// init demand process
+
 (() =>{
     console.log(goalExchanges.length);
     let exchanges = {}

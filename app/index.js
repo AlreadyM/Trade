@@ -1,47 +1,29 @@
 'use strict';
-const color 	= require('colors');
-const ccxt 		= require('ccxt');
-const crypto 	= '';
-const goalExchanges = require('./Const_EXCHANGES');
+const basePath = require('./base_config/path.js').basePath;
+const child_process = require('child_process');
+const demandProcess = child_process.fork(basePath +'demand_part/child_demand.js');
+const orderProcess = child_process.fork(basePath +'order_part/child_order.js');
+const banlanceProcess = child_process.fork(basePath +'banlance_part/child_banlance.js');
+// const inspectProcess = child_process.fork(basePath +'exchange_part/child_demand.js');
 
-(() =>{
-    console.log(goalExchanges.length);
-    let exchanges = {}
-;
-    var loop = {},
-    	currentLoop = 0;
-    loop = setInterval(function () {
-    	if(currentLoop > 50000){ clearInterval(loop)};
-    	currentLoop +=1;
-        _InitLoadMarkets(exchanges);
-    },1000);
-
-    function _InitALLExChanges(exs,TargetEx) {
-        for (var i = 0; i < TargetEx.length; i++) {
-            let currentEx = TargetEx[i];
-            exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
-        };
-    };
-    _InitALLExChanges(exchanges,goalExchanges);
-    async function _InitLoadMarkets(exs) {
-    	for(let ex in exs){
-    		let currentEx = exs[ex];
-            console.time('loadmarkets');
-            try{
-                currentEx.Markets = await currentEx.loadMarkets();
-                console.log(currentEx.id+' geting Markets Done'.green);
-                console.timeEnd('loadmarkets');
-            }catch{
-                console.log(currentEx.id + ' geting Markets Failed'.red);
-                console.timeEnd('loadmarkets');
-            };
-    	};
-    };
-
-})();
-
-
-// exchanges =>
-// demand => log =>
-// order => log =>
-// banlande =>
+// console.log(demandProcess);
+let count = 0;
+// for (var i = 0; i <= 500; i++) {
+//     let random = 1000
+//     setTimeout(function () {
+//     	count += 1;
+//         console.error('Master 运行第'+count+'次');
+//     },random);
+// };
+// setInterval(function () {
+// 	count += 1;
+// 	console.log(demandProcess.pid);
+// 	console.log(orderProcess.pid);
+// 	console.log(banlanceProcess.pid);
+// 	console.error('Master 运行第'+count+'次');
+// },1000)
+demandProcess.send('message from master')
+demandProcess.on('message',(data)=>{
+	console.log(data)
+	console.log('print by master')
+})
