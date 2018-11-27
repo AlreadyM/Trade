@@ -6,7 +6,7 @@ const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
 const goalExchanges = require(basePath+'base_config/Const_EXCHANGES');
-
+const cpuNum    = require('os').cpus().length;
 (() =>{
     console.log(goalExchanges.length);
     let exchanges = {}
@@ -31,27 +31,41 @@ const goalExchanges = require(basePath+'base_config/Const_EXCHANGES');
     _InitALLExChanges(exchanges,goalExchanges);
         // console.log(exchanges)
         console.log('贰')
-        init_child_process(exchanges);
+    function init_child_process_byfork(cpuNum,js) {
+        for (let i = 0; i < cpuNum; i++) {
+            child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
+        }
+        console.log('Master Hello World!')
+        for (var i = 0; i < 99999; i++) {
+            let random = Math.random()*30000;
+            setTimeout(function () {
+                console.log('Master Hello World!')
+            },random)
+        }
+    }
+    init_child_process_byfork(cpuNum)
+        // init_child_process(exchanges);
         console.log('叄')
     function init_child_process(exs) {
         // console.log(exs);
         for(let ex in exs){
             let currentEx = exs[ex];
 
+            console.log(currentEx.id)
         // for (var i = 0; i < exs.length; i++) {
             // let currentEx = exs[ex];
             // console.log(currentEx)
-            load_Markets_process[currentEx] = child_process.spawn('node', [basePath +'exchange_part/_load_Markets_BY_child_process.js', currentEx])
-            load_Markets_process[currentEx].stdout.on('data', function (data) {
+            load_Markets_process[(currentEx.id)] = child_process.spawn('node', [basePath +'exchange_part/_load_Markets_BY_child_process.js', currentEx])
+            load_Markets_process[(currentEx.id)].stdout.on('data', function (data) {
                   console.log('stdout: ' + data);
                });
              
-               load_Markets_process[currentEx].stderr.on('data', function (data) {
+               load_Markets_process[(currentEx.id)].stderr.on('data', function (data) {
                   console.log('stderr: ' + data);
                });
              
-               load_Markets_process[currentEx].on('close', function (code) {
-                  console.log('子进程已退出，退出码 '+code);
+               load_Markets_process[(currentEx.id)].on('exit', function (code) {
+                  console.log( process.getuid()+'子进程已退出，退出码 '+code);
                });
         }
         
