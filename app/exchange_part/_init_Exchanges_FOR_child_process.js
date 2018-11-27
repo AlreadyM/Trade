@@ -6,7 +6,8 @@ const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
 const goalExchanges = require(basePath+'base_config/Const_EXCHANGES');
-const cpuNum    = require('os').cpus().length;
+// const cpuNum    = require('os').cpus().length;
+const cpuNum    = goalExchanges.length;
 (() =>{
     console.log(goalExchanges.length);
     let exchanges = {}
@@ -36,8 +37,8 @@ const cpuNum    = require('os').cpus().length;
             child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
         }
         console.log('Master Hello World!')
-        for (var i = 0; i < 99999; i++) {
-            let random = Math.random()*30000;
+        for (var i = 0; i < 999999; i++) {
+            let random = Math.random()*20000;
             setTimeout(function () {
                 console.log('Master Hello World!')
             },random)

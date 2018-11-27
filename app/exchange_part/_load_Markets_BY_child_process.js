@@ -5,7 +5,6 @@
     let pid = process.pid;
     let count = 0;
 function _InitLoadMarkets(ex) {
-    // for(let ex in exs){
         // let currentEx = exs[ex];
         // console.time('loadmarkets');
         // try{
@@ -17,13 +16,13 @@ function _InitLoadMarkets(ex) {
         //     console.log(ex.id + ' geting Markets Failed'.red);
         //     console.timeEnd('loadmarkets');
         // };
-        // return ex.Markets;
-        for (var i = 0; i < 6000; i++) {
+        
+        for (var i = 0; i <= 60000; i++) {
             let random = Math.random()*10000
             setTimeout(function () {
                 count +=1;
                     console.error('worker'+pid+'运行第'+count+'次');
-                if(count === 5000){
+                if(count === 50000){
                     return false;
                 }
             },random)
@@ -31,6 +30,7 @@ function _InitLoadMarkets(ex) {
         console.log('worker'+pid+':hello World!')
         // console.time('loadmarkets');
 
+        // return ex.Markets;
 	// };
 };
 _InitLoadMarkets(process.argv[2])
