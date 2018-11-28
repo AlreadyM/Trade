@@ -15,7 +15,7 @@
  "coinbaseprime",
  "coinbasepro",
  "coinegg", //long time
- "cointiger", //need api key
+ // "cointiger", //need api key
  "exmo", //long time
  "gateio", //ok then not ok
  "hitbtc", //long time

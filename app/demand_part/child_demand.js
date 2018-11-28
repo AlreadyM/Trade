@@ -1,6 +1,6 @@
 'use strict';
 const color = require('colors');
-// const ccxt = require('ccxt');
+const ccxt = require('ccxt');
 const basePath = require('./../base_config/path.js').basePath;
 const golExchanges = require(basePath+'base_config/Const_EXCHANGES');
 // console.log(exchanges);
@@ -11,7 +11,7 @@ process.on('message',(exchanges)=>{
 	console.log(pid)
 	// console.log(exchanges)
 	console.log('get message from master print by child')
-	loadMarkets(exchanges);
+	// loadMarkets(exchanges);
 });
 
 let All_Exchanges = {};
@@ -23,21 +23,25 @@ function _InitALLExChanges(exs,TargetEx) {
     };
     return exs;
 };
-// _InitALLExChanges(All_Exchanges,golExchanges);
+_InitALLExChanges(All_Exchanges,golExchanges);
 // console.log(All_Exchanges)
-// let Markets = {};
+	// loadMarkets(All_Exchanges);
+let Markets = {};
 async function loadMarkets(exs) {
-		console.log(exs.length);
-		console.log('111');
+		// console.log(exs.length);
+		// console.log('111');
 
 		for(let ex in exs){
 			let currentEx = exs[ex];
-	        console.time(currentEx.id);
-	        console.time('loadmarkets');
+	        // console.time(currentEx.id);
+	        // console.log('--------');
+	        // console.time('loadmarkets');
+	        // console.log(currentEx.loadMarkets)
 	        try{
 	            currentEx.Markets = await currentEx.loadMarkets();
 	            console.log(currentEx.id+' geting Markets Done'.green);
 	            console.timeEnd('loadmarkets');
+	            process.send(currentEx)
 	        }catch(e){
 	        	console.log(e.message)
 	            console.log(currentEx.id + ' geting Markets Failed'.red);
@@ -45,6 +49,12 @@ async function loadMarkets(exs) {
 	        };
 		};
 };
+function loopCircle() {
+	setInterval(function () {
+		loadMarkets(All_Exchanges);
+	},500)
+};
+loopCircle();
 function retrunDataFromChild() {
 	let loopTimes = 60;
 	for (var i = 0; i <= loopTimes; i++) {

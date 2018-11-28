@@ -2,7 +2,7 @@
 const basePath = require('./base_config/path.js').basePath;
 const child_process = require('child_process');
 const exchanges = require(basePath+'base_config/Const_EXCHANGES');
-const ccxt = require('ccxt');
+// const ccxt = require('ccxt');
 const demandProcess = child_process.fork(basePath +'demand_part/child_demand.js');
 // const orderProcess = child_process.fork(basePath +'order_part/child_order.js');
 // const banlanceProcess = child_process.fork(basePath +'banlance_part/child_banlance.js');
@@ -32,11 +32,11 @@ function _InitALLExChanges(exs,TargetEx) {
         // console.log(exs[currentEx].id)
     };
 };
-_InitALLExChanges(All_Exchanges,exchanges)
+// _InitALLExChanges(All_Exchanges,exchanges)
 demandProcess.send(All_Exchanges);
-demandProcess.on('message',(data)=>{
-	console.log(data)
-	console.log('print by master')
+demandProcess.on('message',(marketsParent)=>{
+	console.log(marketsParent.Markets)
+	console.log('get msg from child print by master')
 })
 demandProcess.on('close',()=>{
 	console.log('demandprocess ended');
