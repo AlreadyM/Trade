@@ -33,7 +33,7 @@ function _InitALLExChanges(exs,TargetEx) {
     };
 };
 _InitALLExChanges(All_Exchanges,exchanges)
-demandProcess.send(All_Exchanges)
+demandProcess.send(All_Exchanges);
 demandProcess.on('message',(data)=>{
 	console.log(data)
 	console.log('print by master')

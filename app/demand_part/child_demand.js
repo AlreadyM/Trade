@@ -1,6 +1,8 @@
 'use strict';
 const color = require('colors');
+// const ccxt = require('ccxt');
 const basePath = require('./../base_config/path.js').basePath;
+const golExchanges = require(basePath+'base_config/Const_EXCHANGES');
 // console.log(exchanges);
 let count = 0,
 	pid = process.pid;
@@ -8,29 +10,42 @@ let count = 0,
 process.on('message',(exchanges)=>{
 	console.log(pid)
 	// console.log(exchanges)
-	console.log(' print by child')
+	console.log('get message from master print by child')
 	loadMarkets(exchanges);
 });
-let Markets = {}
+
+let All_Exchanges = {};
+function _InitALLExChanges(exs,TargetEx) {
+    for (var i = 0; i < TargetEx.length; i++) {
+        let curTag = TargetEx[i];
+        exs[curTag] = eval("new ccxt['"+TargetEx[i]+"']()");
+        console.log(exs[curTag].id)
+    };
+    return exs;
+};
+// _InitALLExChanges(All_Exchanges,golExchanges);
+// console.log(All_Exchanges)
+// let Markets = {};
 async function loadMarkets(exs) {
-	console.log('111')
-	        console.time('loadmarkets');
+		console.log(exs.length);
+		console.log('111');
+
 		for(let ex in exs){
 			let currentEx = exs[ex];
-	            // currentEx.Markets = await currentEx.loadMarkets();
-	            console.log(currentEx)
-	        // try{
-	        //     // console.log(currentEx.id+' geting Markets Done'.green);
-	        //     // console.timeEnd('loadmarkets');
-	        //     process.send(currentEx.id);
-	        //     console.log(currentEx.id +'loaded'.green)
-	        // }catch{
-	        //     console.log(currentEx.id + ' geting Markets Failed'.red);
-	        // };
-		};
+	        console.time(currentEx.id);
+	        console.time('loadmarkets');
+	        try{
+	            currentEx.Markets = await currentEx.loadMarkets();
+	            console.log(currentEx.id+' geting Markets Done'.green);
 	            console.timeEnd('loadmarkets');
+	        }catch(e){
+	        	console.log(e.message)
+	            console.log(currentEx.id + ' geting Markets Failed'.red);
+	            console.timeEnd('loadmarkets');
+	        };
+		};
 };
-(function retrunDataFromChild() {
+function retrunDataFromChild() {
 	let loopTimes = 60;
 	for (var i = 0; i <= loopTimes; i++) {
 		let random = Math.random()*2000 +1000
@@ -48,4 +63,4 @@ async function loadMarkets(exs) {
 		    }
 		},random)
 	}
-})
+}
