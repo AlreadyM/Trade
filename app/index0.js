@@ -2,9 +2,8 @@
 const color 	= require('colors');
 const ccxt 		= require('ccxt');
 const crypto 	= '';
-const goalExchanges = require('./Const_EXCHANGES');
+const goalExchanges = require('./base_config/Const_EXCHANGES');
 
-child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
 
 (() =>{
     console.log(goalExchanges.length);
@@ -15,7 +14,7 @@ child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
     loop = setInterval(function () {
     	if(currentLoop > 50000){ clearInterval(loop)};
     	currentLoop +=1;
-        // _InitLoadMarkets(exchanges);
+        _InitLoadMarkets(exchanges);
     },1000);
 
     function _InitALLExChanges(exs,TargetEx) {
@@ -24,7 +23,7 @@ child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
             exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
         };
     };
-    // _InitALLExChanges(exchanges,goalExchanges);
+    _InitALLExChanges(exchanges,goalExchanges);
     async function _InitLoadMarkets(exs) {
     	for(let ex in exs){
     		let currentEx = exs[ex];
@@ -40,7 +39,7 @@ child_process.fork(basePath +'exchange_part/_load_Markets_BY_child_process.js');
     	};
     };
 
-});
+})();
 
 
 // exchanges =>
