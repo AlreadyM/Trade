@@ -35,7 +35,7 @@ function _InitALLExChanges(exs,TargetEx) {
 // _InitALLExChanges(All_Exchanges,exchanges)
 demandProcess.send(All_Exchanges);
 demandProcess.on('message',(marketsParent)=>{
-	console.log(marketsParent.Markets)
+	console.log(marketsParent.Markets[0].id)
 	console.log('get msg from child print by master')
 })
 demandProcess.on('close',()=>{
