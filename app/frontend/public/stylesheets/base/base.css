@@ -1,0 +1,10 @@
+.flex {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex; }
+  .flex .flex-item {
+    flex: 1; }
+
+/*# sourceMappingURL=base.css.map */
