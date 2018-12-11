@@ -1,0 +1,14 @@
+extend ../layout
+block head
+	link(rel="stylesheet", href="/stylesheets/carry/carry.css")
+block content
+	include ./carrymarket
+	.carry-item
+		.carry-item-title #{symbolname}
+		.flex
+			.flex-item
+				+carrymarket(HIGH)
+			.gap 分割区域
+
+			.flex-item
+				+carrymarket(LOW)

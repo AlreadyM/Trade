@@ -1,0 +1,58 @@
+.flex {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex; }
+  .flex .flex-item {
+    flex: 1; }
+
+.market {
+  background-color: #242B46;
+  text-align: center; }
+  .market .name {
+    font-size: 20px;
+    font-weight: bold; }
+  .market .symbol-take {
+    font-size: 14px;
+    color: red; }
+    .market .symbol-take .gap-market {
+      background-color: #1B2139; }
+    .market .symbol-take .data {
+      position: relative;
+      margin: 4px 0;
+      line-height: 20px; }
+      .market .symbol-take .data .count-per {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 60%;
+        background-color: rgba(255, 0, 0, 0.2); }
+  .market .symbol-make {
+    font-size: 14px;
+    color: green; }
+    .market .symbol-make .gap-market {
+      background-color: #1B2139; }
+    .market .symbol-make .data {
+      position: relative;
+      margin: 4px 0;
+      line-height: 20px; }
+      .market .symbol-make .data .count-per {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 60%;
+        background-color: rgba(0, 128, 0, 0.2); }
+
+.carry-item {
+  width: 50%; }
+  .carry-item .carry-item-title {
+    line-height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: #242B46; }
+
+/*# sourceMappingURL=carry.css.map */

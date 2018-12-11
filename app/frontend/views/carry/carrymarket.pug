@@ -1,0 +1,26 @@
+mixin carrymarket(market)
+	.market
+		.name #{ market.name }
+		.symbol-take Take 买家
+			.flex.title
+				.flex-item 数量
+				.flex-item 价格
+				.flex-item 累计
+			each item in market.take
+				.flex.data
+					.count-per
+					.flex-item #{item.count}
+					.flex-item #{item.mount}
+					.flex-item #{item.mount}
+		.symbol-make 
+			.gap-market Make 卖家
+			//- .flex.title
+			//- 	.flex-item 数量
+			//- 	.flex-item 价格
+			//- 	.flex-item 累计
+			each item in market.make
+				.flex.data
+					.count-per
+					.flex-item #{item.count}
+					.flex-item #{item.mount}
+					.flex-item #{item.mount}
