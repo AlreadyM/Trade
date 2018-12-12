@@ -9,7 +9,8 @@
 
 .market {
   background-color: #242B46;
-  text-align: center; }
+  text-align: center;
+  user-select: none; }
   .market .name {
     font-size: 20px;
     font-weight: bold; }
