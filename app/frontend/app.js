@@ -5,18 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 
-
-var data = require('./exchangeData/pushNewData')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var carryRouter = require('./routes/carry/carry');
 
-data = new data()
-
-
-setInterval(function () {
-  console.log(data)
-},2000)
 var app = express();
 
 // view engine setup
