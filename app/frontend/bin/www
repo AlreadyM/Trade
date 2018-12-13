@@ -44,15 +44,6 @@ var socket = require('socket.io')(server)
           // console.log(exs[currentEx].id)
       };
   };
-  demandProcess.send(All_Exchanges);
-  demandProcess.on('message',(marketsParent)=>{
-    console.log(marketsParent.Markets[0].id)
-    console.log('get msg from child print by master')
-  })
-  demandProcess.on('close',()=>{
-    console.log('demandprocess ended');
-    // global.exit();
-  })
 
 
 
@@ -66,9 +57,26 @@ socket.on('connection', function(socket){
     });
   var testdata = 'www/'
   setInterval(function () {
-    socket.emit('test message',testdata)
   },2000)
 });
+
+// 建立 socket 连接后监听子线程数据返回 推送给客户端
+
+demandProcess.send(All_Exchanges);
+demandProcess.on('message',(marketsParent)=>{
+  // console.log(marketsParent.Markets[0].id)
+  var msg = 'get msg from child print by master'
+  console.log(msg)
+  socket.emit('test message',msg)
+
+})
+demandProcess.on('close',()=>{
+  console.log('demandprocess ended');
+  // global.exit();
+})
+
+
+
 /**
  * Listen on provided port, on all network interfaces.
  */

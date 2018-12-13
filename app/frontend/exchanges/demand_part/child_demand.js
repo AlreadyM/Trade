@@ -1,8 +1,8 @@
 'use strict';
 const color = require('colors');
 const ccxt = require('ccxt');
-const basePath = require('./../base_config/path.js').basePath;
-const golExchanges = require(basePath+'base_config/Const_EXCHANGES');
+const exchanges_Path = require('./../base_config/path.js').exchangesPath;
+const golExchanges = require(exchanges_Path+'base_config/Const_EXCHANGES');
 // console.log(exchanges);
 let count = 0,
 	pid = process.pid;
