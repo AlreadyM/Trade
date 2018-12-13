@@ -26,6 +26,36 @@ app.set('port', port);
 
 var server = http.createServer(app);
 var socket = require('socket.io')(server)
+
+
+// use child process to get data from ccxt under processer
+  const exchanges_Path = require('./../exchanges/base_config/path.js').exchangesPath;
+  console.log(exchanges_Path+'base_config/Const_EXCHANGES');
+  const child_process = require('child_process');
+  const exchanges = require(exchanges_Path+'base_config/Const_EXCHANGES');
+  const demandProcess = child_process.fork(exchanges_Path +'demand_part/child_demand.js');
+
+  // init exchanges
+  let All_Exchanges = {}
+  function _InitALLExChanges(exs,TargetEx) {
+      for (var i = 0; i < TargetEx.length; i++) {
+          let currentEx = TargetEx[i];
+          exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
+          // console.log(exs[currentEx].id)
+      };
+  };
+  demandProcess.send(All_Exchanges);
+  demandProcess.on('message',(marketsParent)=>{
+    console.log(marketsParent.Markets[0].id)
+    console.log('get msg from child print by master')
+  })
+  demandProcess.on('close',()=>{
+    console.log('demandprocess ended');
+    // global.exit();
+  })
+
+
+
 socket.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
