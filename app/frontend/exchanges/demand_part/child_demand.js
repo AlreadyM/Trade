@@ -28,7 +28,7 @@ _InitALLExChanges(All_Exchanges,golExchanges);
 	// loadMarkets(All_Exchanges);
 let Markets = {};
 async function loadMarkets(exs) {
-		// console.log(exs.length);
+		// console.log(exs.length); 
 		// console.log('111');
 
 		for(let ex in exs){

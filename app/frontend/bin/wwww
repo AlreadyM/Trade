@@ -28,27 +28,24 @@ var server = http.createServer(app);
 var socket = require('socket.io')(server)
 
 
-// // use child process to get data from ccxt under processer
-//   const exchanges_Path = require('./../exchanges/base_config/path.js').exchangesPath;
-//   console.log(exchanges_Path+'base_config/Const_EXCHANGES');
-//   const child_process = require('child_process');
-//   const exchanges = require(exchanges_Path+'base_config/Const_EXCHANGES');
-//   const demandProcess = child_process.fork(exchanges_Path +'demand_part/child_demand.js');
+// use child process to get data from ccxt under processer
+  const exchanges_Path = require('./../exchanges/base_config/path.js').exchangesPath;
+  console.log(exchanges_Path+'base_config/Const_EXCHANGES');
+  const child_process = require('child_process');
+  const exchanges = require(exchanges_Path+'base_config/Const_EXCHANGES');
+  const demandProcess = child_process.fork(exchanges_Path +'demand_part/child_demand.js');
 
-//   // init exchanges
-//   let All_Exchanges = {}
-//   function _InitALLExChanges(exs,TargetEx) {
-//       for (var i = 0; i < TargetEx.length; i++) {
-//           let currentEx = TargetEx[i];
-//           exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
-//           // console.log(exs[currentEx].id)
-//       };
-//   };
+  // init exchanges
+  let All_Exchanges = {}
+  function _InitALLExChanges(exs,TargetEx) {
+      for (var i = 0; i < TargetEx.length; i++) {
+          let currentEx = TargetEx[i];
+          exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
+          // console.log(exs[currentEx].id)
+      };
+  };
 
-var count = 0;
-setInterval(function () {
-  count++;
-},1000)
+
 
 socket.on('connection', function(socket){
   console.log('a user connected');
@@ -58,26 +55,23 @@ socket.on('connection', function(socket){
   socket.on('chat message', function(msg){
       console.log('message: ' + msg);
     });
-  var msg = 'get msg from child print by master'
-  setInterval(function () {
-    socket.emit('send message',msg+'--'+count)
-  },500)
+ 
 });
 
 // 建立 socket 连接后监听子线程数据返回 推送给客户端
 
-// demandProcess.send(All_Exchanges);
-// demandProcess.on('message',(marketsParent)=>{
-//   // console.log(marketsParent.Markets[0].id)
-//   var msg = 'get msg from child print by master'
-//   console.log(msg)
-//   socket.emit('test message',msg)
+demandProcess.send(All_Exchanges);
+demandProcess.on('message',(marketsParent)=>{
+  // console.log(marketsParent.Markets[0].id)
+  var msg = 'get msg from child print by master'
+  console.log(msg)
+  socket.emit('test message',msg)
 
-// })
-// demandProcess.on('close',()=>{
-//   console.log('demandprocess ended');
-//   // global.exit();
-// })
+})
+demandProcess.on('close',()=>{
+  console.log('demandprocess ended');
+  // global.exit();
+})
 
 
 
