@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
   在 MacOS 或 Linux 中，通过如下命令启动此应用：
   $ DEBUG=myapp:* npm start
@@ -28,12 +29,13 @@ var server = http.createServer(app);
 var socket = require('socket.io')(server)
 
 
-// // use child process to get data from ccxt under processer
-//   const exchanges_Path = require('./../exchanges/base_config/path.js').exchangesPath;
-//   console.log(exchanges_Path+'base_config/Const_EXCHANGES');
-//   const child_process = require('child_process');
-//   const exchanges = require(exchanges_Path+'base_config/Const_EXCHANGES');
-//   const demandProcess = child_process.fork(exchanges_Path +'demand_part/child_demand.js');
+// use child process to get data from ccxt under processer
+const basePath = require('./../exchanges/base_config/path.js').exchangesPath;
+const color = require('colors');
+const child_process = require('child_process');
+const exchanges = require(basePath + 'base_config/Const_EXCHANGES');
+// const ccxt = require('ccxt');
+const demandProcess = child_process.fork(basePath + 'demand_part/child_demand.js');
 
 //   // init exchanges
 //   let All_Exchanges = {}
@@ -45,41 +47,43 @@ var socket = require('socket.io')(server)
 //       };
 //   };
 
-var count = 0;
-setInterval(function () {
-  count++;
-},1000)
 
-socket.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-      console.log('user disconnected');
+socket.on('connection', function(socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
     });
-  socket.on('chat message', function(msg){
-      console.log('message: ' + msg);
+    socket.on('chat message', function(msg) {
+        console.log('message: ' + msg);
     });
-  var msg = 'get msg from child print by master'
-  setInterval(function () {
-    socket.emit('send message',msg+'--'+count)
-  },500)
-});
-
+    var testdata = 'www/'
+    setInterval(function() {}, 2000)
+})
 // 建立 socket 连接后监听子线程数据返回 推送给客户端
 
-// demandProcess.send(All_Exchanges);
-// demandProcess.on('message',(marketsParent)=>{
-//   // console.log(marketsParent.Markets[0].id)
-//   var msg = 'get msg from child print by master'
-//   console.log(msg)
-//   socket.emit('test message',msg)
-
-// })
-// demandProcess.on('close',()=>{
-//   console.log('demandprocess ended');
-//   // global.exit();
-// })
-
-
+demandProcess.send('wake up');
+demandProcess.on('message', (child_message) => {
+    var exchange = child_message
+    let cur_exchange_markets = exchange
+    console.log(cur_exchange_markets.id)
+    if (cur_exchange_markets.has['fetchTicker']) { // 如果存在fetchTicker
+        // console.log('存在fetchTicker+++++++')
+        // console.log(cursymbol.symbol)
+        // console.log(cursymbol.id)
+        // console.log(cursymbol.maker)
+        // console.log(cursymbol.taker)
+        socket.emit('message', cur_exchange_markets)
+    } else {
+        var wrong_msg = exchanges[cur_exchange_markets.id] + 'is wrong'
+        console.log(cur_exchange_markets)
+        console.log('不存在fetchTicker----------')
+    }
+    console.log('get msg from child print by master')
+});
+demandProcess.on('close', () => {
+    console.log('demandprocess ended');
+    process.exit();
+})
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -94,19 +98,19 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -114,27 +118,27 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string' ?
+        'Pipe ' + port :
+        'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
 /**
@@ -142,9 +146,9 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string' ?
+        'pipe ' + addr :
+        'port ' + addr.port;
+    debug('Listening on ' + bind);
 }
