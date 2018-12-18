@@ -74,16 +74,4 @@
   width: 60%;
   background-color: rgba(0, 128, 0, 0.2);
 }
-
-.carry-item {
-  width: 50%;
-}
-
-.carry-item .carry-item-title {
-  line-height: 50px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  background: #242B46;
-}
-/*# sourceMappingURL=carry.css.map */
+/*# sourceMappingURL=carry-market.css.map */
