@@ -1,6 +1,6 @@
 // Do Not Change Anything
 module.exports = [
-    "allcoin", //long time
+    // "allcoin", //long time
     // "bcex",
     //  "bibox", //long time need api key
     // "bitbank",

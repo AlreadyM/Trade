@@ -1,5 +1,7 @@
 window.onload = function() {
-    var socket = io();
+    var socket = io('http://localhost:555',{
+        path:'/carry/carry'
+    });
     socket.on('message', function(msg) {
         console.log(msg)
 

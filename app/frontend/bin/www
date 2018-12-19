@@ -26,7 +26,9 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var socket = require('socket.io')(server)
+var socket = require('socket.io')(555,{
+    path:'/carry/carry'
+})
 
 
 // use child process to get data from ccxt under processer
@@ -65,7 +67,7 @@ demandProcess.send('wake up');
 demandProcess.on('message', (child_message) => {
     var exchange = child_message
     let cur_exchange_markets = exchange
-    console.log(cur_exchange_markets.id)
+    // console.log(cur_exchange_markets.id)
     if (cur_exchange_markets.has['fetchTicker']) { // 如果存在fetchTicker
         // console.log('存在fetchTicker+++++++')
         // console.log(cursymbol.symbol)
@@ -75,10 +77,10 @@ demandProcess.on('message', (child_message) => {
         socket.emit('message', cur_exchange_markets)
     } else {
         var wrong_msg = exchanges[cur_exchange_markets.id] + 'is wrong'
-        console.log(cur_exchange_markets)
-        console.log('不存在fetchTicker----------')
+        // console.log(cur_exchange_markets)
+        // console.log('不存在fetchTicker----------')
     }
-    console.log('get msg from child print by master')
+    // console.log('get msg from child print by master')
 });
 demandProcess.on('close', () => {
     console.log('demandprocess ended');
