@@ -6,7 +6,7 @@ const golExchanges = require(exchanges_Path + 'base_config/Const_EXCHANGES');
 
 var All_Exchanges = {};
 const pid = process.pid;
-const delay = 2000;
+const delay = 5000;
 process.on('message', (exchanges) => {
     console.log(pid)
     console.log(exchanges)

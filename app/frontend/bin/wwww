@@ -36,14 +36,14 @@ var socket = require('socket.io')(server)
   const demandProcess = child_process.fork(exchanges_Path +'demand_part/child_demand.js');
 
   // init exchanges
-  let All_Exchanges = {}
-  function _InitALLExChanges(exs,TargetEx) {
-      for (var i = 0; i < TargetEx.length; i++) {
-          let currentEx = TargetEx[i];
-          exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
-          // console.log(exs[currentEx].id)
-      };
-  };
+  // let All_Exchanges = {}
+  // function _InitALLExChanges(exs,TargetEx) {
+  //     for (var i = 0; i < TargetEx.length; i++) {
+  //         let currentEx = TargetEx[i];
+  //         exs[currentEx] = eval("new ccxt['"+TargetEx[i]+"']()");
+  //         // console.log(exs[currentEx].id)
+  //     };
+  // };
 
 
 
@@ -63,9 +63,9 @@ socket.on('connection', function(socket){
 demandProcess.send(All_Exchanges);
 demandProcess.on('message',(marketsParent)=>{
   // console.log(marketsParent.Markets[0].id)
-  var msg = 'get msg from child print by master'
-  console.log(msg)
-  socket.emit('test message',msg)
+  // var msg = 'get msg from child print by master'
+  // console.log(msg)
+  socket.emit('message',msg)
 
 })
 demandProcess.on('close',()=>{

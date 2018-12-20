@@ -57,28 +57,27 @@ socket.on('connection', function(socket) {
         console.log('message: ' + msg);
     });
     var testdata = 'www/'
-    setInterval(function() {}, 2000)
 })
 // 建立 socket 连接后监听子线程数据返回 推送给客户端
 
 demandProcess.send('wake up');
 demandProcess.on('message', (child_message) => {
-    var exchange = child_message
-    let cur_exchange_markets = exchange
-    console.log(cur_exchange_markets.id)
-    if (cur_exchange_markets.has['fetchTicker']) { // 如果存在fetchTicker
+    // var exchange = child_message
+    // let cur_exchange_markets = exchange
+    // console.log(cur_exchange_markets.id)
+    if (child_message.has['fetchTicker']) { // 如果存在fetchTicker
         // console.log('存在fetchTicker+++++++')
         // console.log(cursymbol.symbol)
         // console.log(cursymbol.id)
         // console.log(cursymbol.maker)
         // console.log(cursymbol.taker)
-        socket.emit('message', cur_exchange_markets)
+        socket.emit('message', child_message)
     } else {
-        var wrong_msg = exchanges[cur_exchange_markets.id] + 'is wrong'
-        console.log(cur_exchange_markets)
+        // let wrong_msg = exchanges[cur_exchange_markets.id] + 'is wrong'
+        // console.log(cur_exchange_markets)
         console.log('不存在fetchTicker----------')
     }
-    console.log('get msg from child print by master')
+    // console.log('get msg from child print by master')
 });
 demandProcess.on('close', () => {
     console.log('demandprocess ended');

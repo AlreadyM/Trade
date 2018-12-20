@@ -1,7 +1,8 @@
 window.onload = function() {
     var socket = io();
     socket.on('message', function(msg) {
-        console.log(msg)
+        // console.log(msg)
+        console.log('msg')
 
     })
     var msg = document.querySelectorAll('.carry-item-title')[0].innerText;
